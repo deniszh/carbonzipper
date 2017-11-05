@@ -249,8 +249,11 @@ func mergeValues(metric *pb3.FetchResponse, decoded []pb3.FetchResponse, stats *
 
 			if len(m.Values) != len(metric.Values) {
 				logger.Error("unable to merge ovalues",
+				    zap.String("metric_name", metric.name),
 					zap.Int("metric_values", len(metric.Values)),
+					zap.Any("metric", metric),
 					zap.Int("response_values", len(m.Values)),
+					zap.Any("response", m),
 				)
 				// TODO(dgryski): we should remove
 				// decoded[other] from the list of responses to
