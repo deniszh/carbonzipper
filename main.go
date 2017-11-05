@@ -27,7 +27,7 @@ import (
 	"github.com/go-graphite/carbonzipper/pathcache"
 	cu "github.com/go-graphite/carbonzipper/util/apictx"
 	util "github.com/go-graphite/carbonzipper/util/zipperctx"
-	"github.com/go-graphite/carbonzipper/zipper"
+	"github.com/deniszh/carbonzipper/zipper"
 	pickle "github.com/lomik/og-rek"
 	"github.com/peterbourgon/g2g"
 
