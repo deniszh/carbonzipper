@@ -218,7 +218,7 @@ func mergeResponses(responses []ServerResponse, stats *Stats) ([]string, *pb3.Mu
 		// We assuming that resolution is the same!
 		var longest int
 		for i, d := range decoded {
-                if len(d.GetValues()) < len(decoded[longest].GetValues()) {
+                if len(d.GetValues()) > len(decoded[longest].GetValues()) {
 				longest = i
 			}
 		}
