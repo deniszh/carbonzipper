@@ -213,16 +213,14 @@ func mergeResponses(responses []ServerResponse, stats *Stats) ([]string, *pb3.Mu
 			continue
 		}
 
-        // Ugly hack
-		// Use longest metric as our base
-		// We assuming that resolution is the same!
-		var longest int
+		// Use the metric with the highest resolution as our base
+		var highest int
 		for i, d := range decoded {
-                if len(d.GetValues()) > len(decoded[longest].GetValues()) {
-				longest = i
+			if d.GetStepTime() < decoded[highest].GetStepTime() {
+				highest = i
 			}
 		}
-		decoded[0], decoded[longest] = decoded[longest], decoded[0]
+		decoded[0], decoded[highest] = decoded[highest], decoded[0]
 
 		metric := decoded[0]
 
@@ -274,9 +272,9 @@ func mergeValues(metric *pb3.FetchResponse, decoded []pb3.FetchResponse, stats *
                     )
 				}
 
-				//stats.RenderErrors++
-				//responseLengthMismatch = true
-				//break
+				stats.RenderErrors++
+				responseLengthMismatch = true
+				break
 			}
 
 			// found one
