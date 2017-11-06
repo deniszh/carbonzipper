@@ -234,7 +234,7 @@ func mergeResponses(responses []ServerResponse, stats *Stats) ([]string, *pb3.Mu
 }
 
 func mergeValues(metric *pb3.FetchResponse, decoded []pb3.FetchResponse, stats *Stats) {
-	logger := zapwriter.Logger("zipper_render")
+	//logger := zapwriter.Logger("zipper_render")
 
 	for i := range metric.Values {
 		if !metric.IsAbsent[i] {
