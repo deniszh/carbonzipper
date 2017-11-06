@@ -251,6 +251,7 @@ func mergeValues(metric *pb3.FetchResponse, decoded []pb3.FetchResponse, stats *
 
 			if len(m.Values) != len(metric.Values) {
 			    if len(m.Values) <= 20 && len(m.Values) <= 20 {
+		            // print values for small metrics
                     logger.Error("unable to merge ovalues",
                         zap.String("metric_name", metric.Name),
                         zap.Int("metric_values", len(metric.Values)),
@@ -259,6 +260,7 @@ func mergeValues(metric *pb3.FetchResponse, decoded []pb3.FetchResponse, stats *
                         zap.Any("response", m),
                     )
 			    } else {
+			        // otherwise print only metadata
                     logger.Error("unable to merge ovalues",
                         zap.String("metric_name", metric.Name),
                         zap.Int32("metric_start", metric.StartTime),
@@ -271,16 +273,10 @@ func mergeValues(metric *pb3.FetchResponse, decoded []pb3.FetchResponse, stats *
                         zap.Int("response_values", len(m.Values)),
                     )
 				}
-				// TODO(dgryski): we should remove
-				// decoded[other] from the list of responses to
-				// consider but this assumes that decoded[0] is
-				// the 'highest resolution' response and thus
-				// the one we want to keep, instead of the one
-				// we want to discard
 
-				stats.RenderErrors++
-				responseLengthMismatch = true
-				break
+				//stats.RenderErrors++
+				//responseLengthMismatch = true
+				//break
 			}
 
 			// found one
