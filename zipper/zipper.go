@@ -254,7 +254,7 @@ func mergeValues(metric *pb3.FetchResponse, decoded []pb3.FetchResponse, stats *
                         zap.Int("metric_values", len(metric.Values)),
                         zap.Int("response_values", len(m.Values)),
                         zap.Any("metric", metric),
-                        zap.Any("response", response),
+                        zap.Any("response", m),
                     )
 			    } else {
                     logger.Error("unable to merge ovalues",
