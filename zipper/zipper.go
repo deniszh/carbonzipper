@@ -259,13 +259,13 @@ func mergeValues(metric *pb3.FetchResponse, decoded []pb3.FetchResponse, stats *
 			    } else {
                     logger.Error("unable to merge ovalues",
                         zap.String("metric_name", metric.Name),
-                        zap.Int("metric_start", metric.StartTime),
-                        zap.Int("metric_end", metric.StopTime),
-                        zap.Int("metric_step", metric.StepTime),
+                        zap.Int32("metric_start", metric.StartTime),
+                        zap.Int32("metric_end", metric.StopTime),
+                        zap.Int32("metric_step", metric.StepTime),
                         zap.Int("metric_values", len(metric.Values)),
-                        zap.Int("response_start", m.StartTime),
-                        zap.Int("response_end", m.StopTime),
-                        zap.Int("response_step", m.StepTime),
+                        zap.Int32("response_start", m.StartTime),
+                        zap.Int32("response_end", m.StopTime),
+                        zap.Int32("response_step", m.StepTime),
                         zap.Int("response_values", len(m.Values)),
                     )
 				}
