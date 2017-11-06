@@ -236,54 +236,17 @@ func mergeResponses(responses []ServerResponse, stats *Stats) ([]string, *pb3.Mu
 func mergeValues(metric *pb3.FetchResponse, decoded []pb3.FetchResponse, stats *Stats) {
 	logger := zapwriter.Logger("zipper_render")
 
-	var responseLengthMismatch bool
 	for i := range metric.Values {
-		if !metric.IsAbsent[i] || responseLengthMismatch {
-			continue
-		}
-
-		// found a missing value, find a replacement
-		for other := 1; other < len(decoded); other++ {
-
-			m := decoded[other]
-
-			if len(m.Values) != len(metric.Values) {
-			    if len(m.Values) <= 20 && len(m.Values) <= 20 {
-		            // print values for small metrics
-                    logger.Error("unable to merge ovalues",
-                        zap.String("metric_name", metric.Name),
-                        zap.Int("metric_values", len(metric.Values)),
-                        zap.Int("response_values", len(m.Values)),
-                        zap.Any("metric", metric),
-                        zap.Any("response", m),
-                    )
-			    } else {
-			        // otherwise print only metadata
-                    logger.Error("unable to merge ovalues",
-                        zap.String("metric_name", metric.Name),
-                        zap.Int32("metric_start", metric.StartTime),
-                        zap.Int32("metric_end", metric.StopTime),
-                        zap.Int32("metric_step", metric.StepTime),
-                        zap.Int("metric_values", len(metric.Values)),
-                        zap.Int32("response_start", m.StartTime),
-                        zap.Int32("response_end", m.StopTime),
-                        zap.Int32("response_step", m.StepTime),
-                        zap.Int("response_values", len(m.Values)),
-                    )
-				}
-
-				//stats.RenderErrors++
-				//responseLengthMismatch = true
-				break
-			}
-
-			// found one
-			if !m.IsAbsent[i] {
-				metric.IsAbsent[i] = false
-				metric.Values[i] = m.Values[i]
-			}
-		}
-	}
+		if !metric.IsAbsent[i] {
+    		for other := 1; other < len(decoded); other++ {
+    			m := decoded[other]
+    			if !m.IsAbsent[i] {
+	    			metric.IsAbsent[i] = false
+		    		metric.Values[i] = m.Values[i]
+			    }
+	 	    }
+	    }
+    }
 }
 
 func infoUnpackPB(responses []ServerResponse, stats *Stats) map[string]pb3.InfoResponse {
