@@ -272,8 +272,8 @@ func mergeValues(metric *pb3.FetchResponse, decoded []pb3.FetchResponse, stats *
                     )
 				}
 
-				stats.RenderErrors++
-				responseLengthMismatch = true
+				//stats.RenderErrors++
+				//responseLengthMismatch = true
 				break
 			}
 
